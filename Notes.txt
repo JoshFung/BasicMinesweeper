@@ -1,0 +1,17 @@
+valueBoard values for each tile:
+-1 = Unexposed Blank
+-2 = Exposed Blank (no nearby mines)
+-3 = Unexposed Mine
+-4 = Exposed Mine
+-5 = Flag
+
+0-8 = # of mines surrounding the chosen tile
+
+visualBoard values for each tile:
+-1 = Unexposed
+1 = Exposed
+
+
+TO DO:
+- complete checkUpperRow() and checkLowerRow()
+- make the board a double array instead of a single
