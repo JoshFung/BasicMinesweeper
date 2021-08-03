@@ -2,27 +2,28 @@
 
 Minesweeper::Minesweeper() {
     beginningSettings();
-    mainBoard.printBoard();
+    mainBoard = new Board(rows, cols, mines);
+    mainBoard->printBoard();
 }
 
 
 Minesweeper::~Minesweeper() {
-
+    delete mainBoard;
 }
 
 
 int Minesweeper::difficultyChoice(string ss) {
     if (ss == "Easy" || ss == "easy") {
-        mainBoard.boardRows = mainBoard.boardCols = mainBoard.mineCount = 10;
+        rows = cols = mines = 10;
         return 0;
     } else if (ss == "Medium" || ss == "medium") {
-        mainBoard.boardRows = mainBoard.boardCols = 16;
-        mainBoard.mineCount = 40;
+        rows = cols = 16;
+        mines = 40;
         return 0;
     } else if (ss == "Hard" || ss == "hard") {
-        mainBoard.boardRows = 30; 
-        mainBoard.boardCols = 16;
-        mainBoard.mineCount = 99;
+        rows = 30; 
+        cols = 16;
+        mines = 99;
         return 0;
     } else {
         return 1;
@@ -39,7 +40,7 @@ void Minesweeper::beginningSettings() {
     while (flag == 1) {
         flag = difficultyChoice(response);
     }
-    cout << "You will play on a " << mainBoard.boardRows << "x" << mainBoard.boardCols << " board, with " << mainBoard.mineCount << " mines." << endl;
+    cout << "You will play on a " << rows << "x" << cols << " board, with " << mines << " mines." << endl;
 }
 
 

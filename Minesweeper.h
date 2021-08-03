@@ -16,16 +16,18 @@ class Board {
     public:
         Board();
         ~Board();
+        Board(int rows, int cols, int mines);
 
         char printTile(int tile);
         void topRowVisualBoard();
         void mainVisualBoard();
         void printBoard();
 
-        int nearbyMines(int pos);
-        int checkUpperRow(int pos);
-        int checkCurrentRow(int pos);
-        int checkLowerRow(int pos);
+        int index(int x, int y);
+        int nearbyMines(int x, int y);
+        int checkUpperRow(int x, int y);
+        int checkCurrentRow(int x, int y);
+        int checkLowerRow(int x, int y);
         void initiateBoard();
         void initiateMines();
 
@@ -50,9 +52,13 @@ class Minesweeper {
 
         int difficultyChoice(string ss);
         void beginningSettings();
+        
 
     private:
-        Board mainBoard;
+        Board* mainBoard;
+        int rows;
+        int cols;
+        int mines;
 };
 
 

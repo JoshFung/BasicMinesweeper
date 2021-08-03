@@ -3,6 +3,7 @@
 
 Board::Board() {
     boardCols = boardRows = mineCount = totalTiles = 0;
+    initiateBoard();
 }
 
 
@@ -12,8 +13,19 @@ Board::~Board() {
 }
 
 
+Board::Board(int rows, int cols, int mines) {
+    boardRows = rows;
+    boardCols = cols;
+    mineCount = mines;
+    totalTiles = 0;
+    initiateBoard();
+}
+
+
 char Board::printTile(int tile) {
-    if (tile == -1 || tile == -3) {
+    if (tile == 0) {
+        return ' ';
+    } else if (tile == -1 || tile == -3) {
         return '-';
     } else if (tile == -2) {
         return ' ';
@@ -22,7 +34,7 @@ char Board::printTile(int tile) {
     } else if (tile == -5) {
         return 'F';
     } else {
-        return (char)(tile+48);
+        return (char)tile;
     }
 }
 
@@ -49,9 +61,11 @@ void Board::mainVisualBoard() {
                 cout << " " << j+1;
             } else {
                 if (j >= 9 && k == 1) {
-                    cout << "  -";
+                    cout << "  ";
+                    cout << printTile(valueBoard[index(k, j)]);
                 } else {
-                    cout << "   -";
+                    cout << "   ";
+                    cout << printTile(valueBoard[index(k, j)]);
                 }
             }
         }
@@ -69,40 +83,98 @@ void Board::printBoard() {
 }
 
 
-int Board::checkUpperRow(int pos) {
+int Board::checkUpperRow(int x, int y) {
     int count = 0;
-    if (((pos - boardCols) >= 0) && (valueBoard[pos-boardCols] == -3)) {
-        count++;
-    }
-    if (((pos-boardCols-1) >= 0) && (valueBoard[pos-boardCols] == -3)) {
-        count++;
-    }
-}
 
+    // if we are at the top of the board
+    if (y == 0) {
+        return count;
+    }
 
-int Board::checkCurrentRow(int pos) {
-    int count = 0;
-    if (((pos % boardCols) != 0) && (valueBoard[pos-1] == -3)) {
+    // if x isn't the far left of the board
+    if (x != 0) {
+        if (valueBoard[index(x-1, y-1)] == -3 || valueBoard[index(x-1, y-1)] == -4) {
+            count++;
+        }
+    }
+
+    // if x isn't the far right of the board
+    if (x != boardCols-1) {
+        if (valueBoard[index(x+1, y-1)] == -3 || valueBoard[index(x+1, y-1)] == -4) {
+            count++;
+        }
+    }
+
+    // check the element above
+    if (valueBoard[index(x, y-1)] == -3 || valueBoard[index(x, y-1)] == -4) {
         count++;
     }
-    if (((pos+1 % boardCols) != 0) && (valueBoard[pos+1] == -3)) {
-        count++;
-    }
+
+    // return the count
     return count;
 }
 
 
-int Board::checkLowerRow(int pos) {
+int Board::checkCurrentRow(int x, int y) {
+    int count = 0;
 
+    // if it isn't the far left of the board, 
+    if (x != 0) {
+        if (valueBoard[index(x-1, y)] == -3 || valueBoard[index(x-1, y)] == -4) {
+            count++;
+        }
+    }
+
+    if (x != boardCols-1) {
+        if (valueBoard[index(x+1, y)] == -3 || valueBoard[index(x+1, y)] == -4) {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 
-int Board::nearbyMines(int pos) {
+int Board::checkLowerRow(int x, int y) {
     int count = 0;
 
-    count += checkCurrentRow(pos);
-    count += checkUpperRow(pos);
-    count += checkLowerRow(pos);
+    if (y == boardRows-1) {
+        return count;
+    }
+
+    if (x != 0) {
+        if (valueBoard[index(x-1, y+1)] == -3 || valueBoard[index(x-1, y+1)] == -4) {
+            count++;
+        }
+    }
+
+    if (x != boardCols-1) {
+        if (valueBoard[index(x+1, y+1)] == -3 || valueBoard[index(x+1, y+1)] == -4) {
+            count++;
+        }
+    }
+
+    if (valueBoard[index(x, y+1)] == -3 || valueBoard[index(x, y+1)] == -4) {
+        count++;
+    }
+
+    return count;
+}
+
+
+int Board::index(int x, int y) {
+    return (y*boardCols + x);
+}
+
+
+int Board::nearbyMines(int x, int y) {
+    int count = 0;
+
+    count += checkCurrentRow(x, y);
+    count += checkUpperRow(x, y);
+    count += checkLowerRow(x, y);
+
+    return count;
 }
 
 
@@ -120,16 +192,17 @@ void Board::initiateBoard() {
     valueBoard = new int[totalTiles];
 
     // set each tile as unexposed
-    for (int i = 0; i < totalTiles; i++) {
+    for (int i = 0; i < totalTiles+1; i++) {
         visualBoard[i] = -1;
+        valueBoard[i] = -1;
     }
 
     // set the mines into valueBoard
-    initiateMines();
+    // initiateMines();
 
     // set values for all other tiles
-    for (int j = 0; j < totalTiles; j++) {
+    // for (int j = 0; j < totalTiles; j++) {
 
-    }
+    // }
 
 }
