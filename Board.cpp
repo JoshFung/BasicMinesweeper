@@ -198,11 +198,13 @@ void Board::initiateBoard() {
     }
 
     // set the mines into valueBoard
-    // initiateMines();
+    initiateMines();
 
     // set values for all other tiles
-    // for (int j = 0; j < totalTiles; j++) {
-
-    // }
+    for (int j = 0; j < boardCols; j++) {
+        for (int k = 0; k < boardRows; k++) {
+            valueBoard[index(j, k)] = nearbyMines(j, k);
+        }
+    }
 
 }

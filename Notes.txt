@@ -13,5 +13,10 @@ visualBoard values for each tile:
 
 
 TO DO:
-- complete checkUpperRow() and checkLowerRow()
-- make the board a double array instead of a single
+- FLAG FEATURE
+    - if already flagged, unflagged
+    - visualBoard should have its own marking -> F
+- REVEALING BUNCHES
+    - if multiple tiles beside it have no bombs around it, reveal them all
+    - optional -> don't know if it's worth it...
+- 
