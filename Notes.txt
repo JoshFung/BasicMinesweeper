@@ -20,4 +20,4 @@ TO DO:
     - if multiple tiles beside it have no bombs around it, reveal them all
     - optional -> don't know if it's worth it...
 - !!!!!!!!!!!!! BOTTOM RIGHT TILE ALWAYS PRINTING '-'
-    - DONT KNOW WHY
+    - DONT KNOW WHY -> entire tenth column i think has problems lmao

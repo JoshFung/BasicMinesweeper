@@ -64,17 +64,21 @@ void Board::mainVisualBoard() {
     cout << endl;
     for (int j = 0; j < boardRows; j++) {
         for (int k = 0; k < boardCols + 1; k++) {
-            if (k == 0 && k < 10) {
+            // if (k == 0 && j < 10) {
+            //     cout << "  " << j+1;
+            // } else if (k == 0 && j >= 10) {
+            //     cout << "  " << j+1;
+
+            // testing
+            if (k == 0) {
                 cout << "  " << j+1;
-            } else if (k == 0 && k >= 10) {
-                cout << " " << j+1;
             } else {
                 if (j >= 9 && k == 1) {
                     cout << "  ";
-                    cout << printTile(visualBoard[index(k, j)]);
+                    cout << printTile(visualBoard[index(k-1, j)]);
                 } else {
                     cout << "   ";
-                    cout << printTile(visualBoard[index(k, j)]);
+                    cout << printTile(visualBoard[index(k-1, j)]);
                 }
             }
         }
@@ -198,7 +202,7 @@ int Board::nearbyMines(int x, int y) {
     count += checkUpperRow(x, y);
     count += checkLowerRow(x, y);
 
-    cout << "bomb count " << count << endl;
+    // cout << "bomb count " << count << endl;
     return count;
 }
 
@@ -240,6 +244,6 @@ void Board::initiateBoard() {
         }
     }
 
-    printBoardExposed();
+    // printBoardExposed();
 
 }
