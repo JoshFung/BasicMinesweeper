@@ -22,6 +22,7 @@ class Board {
         void topRowVisualBoard();
         void mainVisualBoard();
         void printBoard();
+        void printBoardExposed();
 
         int index(int x, int y);
         int nearbyMines(int x, int y);
@@ -30,6 +31,7 @@ class Board {
         int checkLowerRow(int x, int y);
         void initiateBoard();
         void initiateMines();
+        bool checkExposed(int tile);
 
 
         int boardCols;

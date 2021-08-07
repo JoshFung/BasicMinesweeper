@@ -1,15 +1,15 @@
 valueBoard values for each tile:
+-1 = Blank (no numbers)
+-2 = Mine
+0-8 = # of mines surrounding the chosen tile
+
+visualBoard values for each tile:
 -1 = Unexposed Blank
 -2 = Exposed Blank (no nearby mines)
 -3 = Unexposed Mine
 -4 = Exposed Mine
 -5 = Flag
-
 0-8 = # of mines surrounding the chosen tile
-
-visualBoard values for each tile:
--1 = Unexposed
-1 = Exposed
 
 
 TO DO:
@@ -19,4 +19,5 @@ TO DO:
 - REVEALING BUNCHES
     - if multiple tiles beside it have no bombs around it, reveal them all
     - optional -> don't know if it's worth it...
-- 
+- !!!!!!!!!!!!! BOTTOM RIGHT TILE ALWAYS PRINTING '-'
+    - DONT KNOW WHY

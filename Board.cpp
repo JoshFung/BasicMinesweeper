@@ -34,7 +34,16 @@ char Board::printTile(int tile) {
     } else if (tile == -5) {
         return 'F';
     } else {
-        return (char)tile;
+        return tile+48;
+    }
+}
+
+
+bool Board::checkExposed(int tile) {
+    if (visualBoard[tile] == 1) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -62,10 +71,10 @@ void Board::mainVisualBoard() {
             } else {
                 if (j >= 9 && k == 1) {
                     cout << "  ";
-                    cout << printTile(valueBoard[index(k, j)]);
+                    cout << printTile(visualBoard[index(k, j)]);
                 } else {
                     cout << "   ";
-                    cout << printTile(valueBoard[index(k, j)]);
+                    cout << printTile(visualBoard[index(k, j)]);
                 }
             }
         }
@@ -77,6 +86,21 @@ void Board::mainVisualBoard() {
 
 void Board::printBoard() {
     cout << endl;
+    topRowVisualBoard();
+    mainVisualBoard();
+}
+
+
+void Board::printBoardExposed() {
+    cout << endl;
+
+    for (int i = 0; i < totalTiles; i++) {
+        if (valueBoard[i] == -1) {
+            visualBoard[i] == -2;
+        } else if (valueBoard[i] == -2) {
+            visualBoard[i] == -4;
+        }
+    }
     topRowVisualBoard();
     mainVisualBoard();
 
@@ -93,20 +117,20 @@ int Board::checkUpperRow(int x, int y) {
 
     // if x isn't the far left of the board
     if (x != 0) {
-        if (valueBoard[index(x-1, y-1)] == -3 || valueBoard[index(x-1, y-1)] == -4) {
+        if (valueBoard[index(x-1, y-1)] == -2 || valueBoard[index(x-1, y-1)] == -2) {
             count++;
         }
     }
 
     // if x isn't the far right of the board
     if (x != boardCols-1) {
-        if (valueBoard[index(x+1, y-1)] == -3 || valueBoard[index(x+1, y-1)] == -4) {
+        if (valueBoard[index(x+1, y-1)] == -2 || valueBoard[index(x+1, y-1)] == -2) {
             count++;
         }
     }
 
     // check the element above
-    if (valueBoard[index(x, y-1)] == -3 || valueBoard[index(x, y-1)] == -4) {
+    if (valueBoard[index(x, y-1)] == -2 || valueBoard[index(x, y-1)] == -2) {
         count++;
     }
 
@@ -120,13 +144,13 @@ int Board::checkCurrentRow(int x, int y) {
 
     // if it isn't the far left of the board, 
     if (x != 0) {
-        if (valueBoard[index(x-1, y)] == -3 || valueBoard[index(x-1, y)] == -4) {
+        if (valueBoard[index(x-1, y)] == -2 || valueBoard[index(x-1, y)] == -2) {
             count++;
         }
     }
 
     if (x != boardCols-1) {
-        if (valueBoard[index(x+1, y)] == -3 || valueBoard[index(x+1, y)] == -4) {
+        if (valueBoard[index(x+1, y)] == -2 || valueBoard[index(x+1, y)] == -2) {
             count++;
         }
     }
@@ -143,18 +167,18 @@ int Board::checkLowerRow(int x, int y) {
     }
 
     if (x != 0) {
-        if (valueBoard[index(x-1, y+1)] == -3 || valueBoard[index(x-1, y+1)] == -4) {
+        if (valueBoard[index(x-1, y+1)] == -2 || valueBoard[index(x-1, y+1)] == -2) {
             count++;
         }
     }
 
     if (x != boardCols-1) {
-        if (valueBoard[index(x+1, y+1)] == -3 || valueBoard[index(x+1, y+1)] == -4) {
+        if (valueBoard[index(x+1, y+1)] == -2 || valueBoard[index(x+1, y+1)] == -2) {
             count++;
         }
     }
 
-    if (valueBoard[index(x, y+1)] == -3 || valueBoard[index(x, y+1)] == -4) {
+    if (valueBoard[index(x, y+1)] == -2 || valueBoard[index(x, y+1)] == -2) {
         count++;
     }
 
@@ -174,14 +198,20 @@ int Board::nearbyMines(int x, int y) {
     count += checkUpperRow(x, y);
     count += checkLowerRow(x, y);
 
+    cout << "bomb count " << count << endl;
     return count;
 }
 
 
 void Board::initiateMines() {
     srand((int)time(0));
-    for (int i = 0; i < totalTiles; i++) {
-        valueBoard[rand() % totalTiles] = -3;
+    for (int i = 0; i < mineCount; i++) {
+        valueBoard[rand() % totalTiles] = -2;
+    }
+    for (int j = 0; j < totalTiles; j++) {
+        if (valueBoard[j] == -2) {
+            visualBoard[j] == -3;
+        }
     }
 }
 
@@ -191,7 +221,7 @@ void Board::initiateBoard() {
     visualBoard = new int[totalTiles];
     valueBoard = new int[totalTiles];
 
-    // set each tile as unexposed
+    // set each tile as unexposed blanks
     for (int i = 0; i < totalTiles+1; i++) {
         visualBoard[i] = -1;
         valueBoard[i] = -1;
@@ -203,8 +233,13 @@ void Board::initiateBoard() {
     // set values for all other tiles
     for (int j = 0; j < boardCols; j++) {
         for (int k = 0; k < boardRows; k++) {
-            valueBoard[index(j, k)] = nearbyMines(j, k);
+            if (valueBoard[index(j, k)] != -2) {
+                valueBoard[index(j, k)] = nearbyMines(j, k);
+                visualBoard[index(j, k)] = nearbyMines(j, k);
+            }
         }
     }
+
+    printBoardExposed();
 
 }
