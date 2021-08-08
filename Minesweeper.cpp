@@ -50,11 +50,21 @@ void Minesweeper::beginningSettings() {
 int Minesweeper::chooseTile() {
     int x = -1;
     int y = -1;
-    
+    char mode = 'z';
+
     do {
-        cout << "Choose a tile, in an \"x y\" format. For example: \"5 2\": " << endl;
-        cin >> x >> y;
-        cout << endl << "Choosing the tile at " << x << " " << y << "." << endl;
+        while (mode != 'R' || mode != 'F') {
+            mode = 'z';
+            cout << "Reveal(R) or Flag(F) a tile, in an \"x y <R/F>\" format. For example: \"5 2 R\": " << endl;
+            cin >> x >> y >> mode;
+
+            if (mode == 'R') {
+                cout << endl << "Revealing the tile at " << x << " " << y << "." << endl;
+            } else if (mode == 'F') {
+                cout << endl << "Flagging the tile at " << x << " " << y << "." << endl;
+            }
+            
+        }
     } while (mainBoard->revealedTileError(mainBoard->visualBoard[mainBoard->index(x, y)]));
 
     return mainBoard->index(x, y);

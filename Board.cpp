@@ -277,6 +277,9 @@ bool Board::revealedTileError(int tile) {
 
 bool Board::revealTile(int tile) {
     if (valueBoard[tile] == -2) {
-
+        return false;
+        // we'll print the exposed board
+    } else {
+        visualBoard[tile] == valueBoard[tile];
     }
 }
