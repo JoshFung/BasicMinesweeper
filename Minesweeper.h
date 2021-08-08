@@ -55,6 +55,8 @@ class Minesweeper {
 
         int difficultyChoice(string ss);
         void beginningSettings();
+        int chooseTile();
+        void mainGame();
         
 
     private:
@@ -62,6 +64,7 @@ class Minesweeper {
         int rows;
         int cols;
         int mines;
+        bool gameState;
 };
 
 

@@ -41,10 +41,29 @@ void Minesweeper::beginningSettings() {
         flag = difficultyChoice(response);
     }
     cout << "You will play on a " << rows << "x" << cols << " board, with " << mines << " mines." << endl;
+
+    // game official starts
+    gameState = true;
 }
 
 
+int Minesweeper::chooseTile() {
+    int x = -1;
+    int y = -1;
 
+    cout << "Choose a tile, in an \"x y\" format. For example: \"5 2\": " << endl;
+    cin >> x >> y;
+    cout << endl << "Choosing the tile at " << x << " " << y << "." << endl;
+
+    return mainBoard->index(x, y);
+}
+
+
+void Minesweeper::mainGame() {
+    while (gameState == true) {
+        
+    }
+}
 
 
 

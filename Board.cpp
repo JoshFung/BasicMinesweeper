@@ -258,6 +258,4 @@ void Board::initiateBoard() {
         }
     }
 
-    // printBoardExposed();
-
 }
