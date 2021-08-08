@@ -259,3 +259,24 @@ void Board::initiateBoard() {
     }
 
 }
+
+
+// in the case that the tile has already been selected, or flagged
+bool Board::revealedTileError(int tile) {
+    if (visualBoard[tile] == -4) {
+        cout << endl << "This tile has already been flagged!" << endl;
+        return false;
+    } else if (visualBoard[tile] != -1) {
+        cout << endl << "This tile has already been revealed!" << endl;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+bool Board::revealTile(int tile) {
+    if (valueBoard[tile] == -2) {
+
+    }
+}

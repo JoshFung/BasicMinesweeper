@@ -33,6 +33,8 @@ class Board {
         void initiateBoard();
         void initiateMines();
         bool checkExposed(int tile);
+        bool revealedTileError(int tile);
+        bool revealTile(int tile);
 
 
         int boardCols;
