@@ -23,15 +23,13 @@ Board::Board(int rows, int cols, int mines) {
 
 
 char Board::printTile(int tile) {
-    if (tile == 0) {
+    if (tile == 0 || tile == -3) {
         return ' ';
-    } else if (tile == -1 || tile == -3) {
+    } else if (tile ==-1) {
         return '-';
     } else if (tile == -2) {
-        return ' ';
-    } else if (tile == -4) {
         return 'X';
-    } else if (tile == -5) {
+    } else if (tile == -4) {
         return 'F';
     } else {
         return tile+48;
@@ -88,26 +86,42 @@ void Board::mainVisualBoard() {
 }
 
 
+void Board::exposedVisualBoard() {
+    cout << endl;
+    for (int j = 0; j < boardRows; j++) {
+        for (int k = 0; k < boardCols + 1; k++) {
+            // if (k == 0 && j < 10) {
+            //     cout << "  " << j+1;
+            // } else if (k == 0 && j >= 10) {
+            //     cout << "  " << j+1;
+
+            // testing
+            if (k == 0) {
+                cout << "  " << j+1;
+            } else {
+                if (j >= 9 && k == 1) {
+                    cout << "  ";
+                    cout << printTile(valueBoard[index(k-1, j)]);
+                } else {
+                    cout << "   ";
+                    cout << printTile(valueBoard[index(k-1, j)]);
+                }
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+
 void Board::printBoard() {
     cout << endl;
     topRowVisualBoard();
     mainVisualBoard();
-}
 
-
-void Board::printBoardExposed() {
-    cout << endl;
-
-    for (int i = 0; i < totalTiles; i++) {
-        if (valueBoard[i] == -1) {
-            visualBoard[i] == -2;
-        } else if (valueBoard[i] == -2) {
-            visualBoard[i] == -4;
-        }
-    }
+    // temporary
     topRowVisualBoard();
-    mainVisualBoard();
-
+    exposedVisualBoard();
 }
 
 
@@ -214,7 +228,7 @@ void Board::initiateMines() {
     }
     for (int j = 0; j < totalTiles; j++) {
         if (valueBoard[j] == -2) {
-            visualBoard[j] == -3;
+            visualBoard[j] = -1;
         }
     }
 }
@@ -239,7 +253,7 @@ void Board::initiateBoard() {
         for (int k = 0; k < boardRows; k++) {
             if (valueBoard[index(j, k)] != -2) {
                 valueBoard[index(j, k)] = nearbyMines(j, k);
-                visualBoard[index(j, k)] = nearbyMines(j, k);
+                visualBoard[index(j, k)] = -1;
             }
         }
     }

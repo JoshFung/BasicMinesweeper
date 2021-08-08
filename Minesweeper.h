@@ -21,6 +21,7 @@ class Board {
         char printTile(int tile);
         void topRowVisualBoard();
         void mainVisualBoard();
+        void exposedVisualBoard();
         void printBoard();
         void printBoardExposed();
 

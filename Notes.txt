@@ -4,11 +4,12 @@ valueBoard values for each tile:
 0-8 = # of mines surrounding the chosen tile
 
 visualBoard values for each tile:
--1 = Unexposed Blank
--2 = Exposed Blank (no nearby mines)
--3 = Unexposed Mine
--4 = Exposed Mine
--5 = Flag
+-1 = Unexposed w/ nearby bombs or no bombs / Unexposed Mine
+-2 = Exposed Mine
+-3 = Exposed Blank (no nearby mines)
+-4 = Flag
+-5 = 
+-6 = 
 0-8 = # of mines surrounding the chosen tile
 
 
@@ -19,5 +20,3 @@ TO DO:
 - REVEALING BUNCHES
     - if multiple tiles beside it have no bombs around it, reveal them all
     - optional -> don't know if it's worth it...
-- !!!!!!!!!!!!! BOTTOM RIGHT TILE ALWAYS PRINTING '-'
-    - DONT KNOW WHY -> entire tenth column i think has problems lmao
