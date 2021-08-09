@@ -120,6 +120,27 @@ void Minesweeper::changeTile(int idx, char mode) {
 }
 
 
+int Minesweeper::endGameCheck(int idx, char mode) {
+    if (mode == 'R' && mainBoard->visualBoard[idx] == -2) {
+        // game over -> bomb detonated
+        return -1;
+    } else if (mode == 'R') {
+        int count = 0;
+
+        for (int i = 0; i < (rows * cols); i++) {
+            if (mainBoard->valueBoard[i] == -2 && mainBoard->visualBoard[i] == -4) {
+                count++;
+            }
+        }
+
+        if (count == mines) {
+            // game over -> all bombs revealed
+            return 1;
+        }
+    }
+}
+
+
 void Minesweeper::mainGame() {
     int idx = -1;
     char mode = 'z';
@@ -133,8 +154,4 @@ void Minesweeper::mainGame() {
 
     }
 }
-
-
-
-
 

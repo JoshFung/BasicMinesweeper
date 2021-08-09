@@ -62,6 +62,7 @@ class Minesweeper {
         void beginningSettings();
         void chooseTile(int & idx, char & mode);
         void changeTile(int idx, char mode);
+        int endGameCheck(int idx, char mode);
         void mainGame();
         
 
