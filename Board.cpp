@@ -62,12 +62,6 @@ void Board::mainVisualBoard() {
     cout << endl;
     for (int j = 0; j < boardRows; j++) {
         for (int k = 0; k < boardCols + 1; k++) {
-            // if (k == 0 && j < 10) {
-            //     cout << "  " << j+1;
-            // } else if (k == 0 && j >= 10) {
-            //     cout << "  " << j+1;
-
-            // testing
             if (k == 0) {
                 cout << "  " << j+1;
             } else {
@@ -258,4 +252,24 @@ void Board::initiateBoard() {
         }
     }
 
+}
+
+
+bool Board::exposedError(int tile) {
+    if (visualBoard[tile] == -3) {
+        cout << endl << "The tile is already exposed!" << endl;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+bool Board::flagError(int tile) {
+    if (visualBoard[tile] == -4) {
+        cout << endl << "The tile is flagged!" << endl;
+        return true;
+    } else {
+        return false;
+    }
 }
