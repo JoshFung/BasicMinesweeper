@@ -12,6 +12,9 @@ visualBoard values for each tile:
 -6 = 
 0-8 = # of mines surrounding the chosen tile
 
+chooseTile values:
+
+
 
 TO DO:
 - FLAG FEATURE -> p2
