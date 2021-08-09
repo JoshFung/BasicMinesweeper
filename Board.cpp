@@ -84,12 +84,6 @@ void Board::exposedVisualBoard() {
     cout << endl;
     for (int j = 0; j < boardRows; j++) {
         for (int k = 0; k < boardCols + 1; k++) {
-            // if (k == 0 && j < 10) {
-            //     cout << "  " << j+1;
-            // } else if (k == 0 && j >= 10) {
-            //     cout << "  " << j+1;
-
-            // testing
             if (k == 0) {
                 cout << "  " << j+1;
             } else {
@@ -252,6 +246,19 @@ void Board::initiateBoard() {
         }
     }
 
+}
+
+
+bool Board::invalidTile(int x, int y) {
+    if (x <= 0 || x > boardCols) {
+        cout << endl << "Invalid x value!" << endl;
+        return true;
+    } else if (y <= 0 || y > boardRows) {
+        cout << endl << "Invalid y value!" << endl;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 

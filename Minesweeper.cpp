@@ -63,7 +63,18 @@ int Minesweeper::chooseTile() {
         cin >> x >> y >> mode;
         cout << endl << "Choosing the tile at " << x << " " << y << "." << endl;
 
-        if (mode == 'R' || mode == 'r') {
+        // if the tile is invalid
+        if (mainBoard->invalidTile(x, y) == true) {
+            flag = false;
+
+        // if we are to reveal a tile
+        } else if (mode == 'R' || mode == 'r') {
+            // check if the tile is already revealed
+            if (mainBoard->exposedError(mainBoard->index(x,y)) == true) {
+                flag = false;
+            } else {
+                
+            }
             
         } else if (mode == 'F' || mode == 'f') {
 

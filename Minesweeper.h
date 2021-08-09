@@ -34,6 +34,7 @@ class Board {
         void initiateMines();
         bool checkExposed(int tile);
 
+        bool invalidTile(int x, int y);
         bool exposedError(int tile);
         bool flagError(int tile);
 
