@@ -23,12 +23,12 @@ Board::Board(int rows, int cols, int mines) {
 
 
 char Board::printTile(int tile) {
-    if (tile == 0 || tile == -3) {
+    if (tile == 0 || tile == -1) {
         return ' ';
-    } else if (tile ==-1) {
-        return '-';
     } else if (tile == -2) {
         return 'X';
+    } else if (tile == -3) {
+        return '-';
     } else if (tile == -4) {
         return 'F';
     } else {
@@ -214,11 +214,11 @@ void Board::initiateMines() {
     for (int i = 0; i < mineCount; i++) {
         valueBoard[rand() % totalTiles] = -2;
     }
-    for (int j = 0; j < totalTiles; j++) {
-        if (valueBoard[j] == -2) {
-            visualBoard[j] = -1;
-        }
-    }
+    // for (int j = 0; j < totalTiles; j++) {
+    //     if (valueBoard[j] == -2) {
+    //         visualBoard[j] = -3;
+    //     }
+    // }
 }
 
 
@@ -229,7 +229,7 @@ void Board::initiateBoard() {
 
     // set each tile as unexposed blanks
     for (int i = 0; i < totalTiles+1; i++) {
-        visualBoard[i] = -1;
+        visualBoard[i] = -3;
         valueBoard[i] = -1;
     }
 
@@ -241,7 +241,7 @@ void Board::initiateBoard() {
         for (int k = 0; k < boardRows; k++) {
             if (valueBoard[index(j, k)] != -2) {
                 valueBoard[index(j, k)] = nearbyMines(j, k);
-                visualBoard[index(j, k)] = -1;
+                visualBoard[index(j, k)] = -3;
             }
         }
     }
@@ -263,7 +263,7 @@ bool Board::invalidTile(int x, int y) {
 
 
 bool Board::exposedError(int tile) {
-    if (visualBoard[tile] == -3) {
+    if (visualBoard[tile] == -1) {
         cout << endl << "The tile is already exposed!" << endl;
         return true;
     } else if (visualBoard[tile] == -4) {
@@ -276,7 +276,7 @@ bool Board::exposedError(int tile) {
 
 
 bool Board::flagError(int tile) {
-    if (visualBoard[tile] != -1 || visualBoard[tile] != -4) {
+    if (visualBoard[tile] != -3 || visualBoard[tile] != -4) {
         cout << endl << "You can't flag/unflag this tile!" << endl;
         return true;
     } else {

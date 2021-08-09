@@ -102,6 +102,24 @@ void Minesweeper::chooseTile(int & idx, char & mode) {
 }
 
 
+void Minesweeper::changeTile(int idx, char mode) {
+    // error checking is done prior, so just need to change tiles
+
+    // reveal tile
+    if (mode == 'R') {
+        mainBoard->visualBoard[idx] = mainBoard->valueBoard[idx];
+
+    // flag / unflag tile
+    } else {
+        if (mainBoard->visualBoard[idx] == -4) {
+            mainBoard->visualBoard[idx] = -3;
+        } else {
+            mainBoard->visualBoard[idx] = -4;
+        }
+    }
+}
+
+
 void Minesweeper::mainGame() {
     int idx = -1;
     char mode = 'z';
@@ -109,6 +127,9 @@ void Minesweeper::mainGame() {
     while (gameState == true) {
         idx = -1;
         mode = 'z';
+
+        chooseTile(idx, mode);
+        changeTile(idx, mode);
 
     }
 }

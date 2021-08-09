@@ -4,9 +4,9 @@ valueBoard values for each tile:
 0-8 = # of mines surrounding the chosen tile
 
 visualBoard values for each tile:
--1 = Unexposed w/ nearby bombs or no bombs / Unexposed Mine
+-1 = Exposed Blank (no nearby mines)
 -2 = Exposed Mine
--3 = Exposed Blank (no nearby mines)
+-3 = Unexposed w/ nearby bombs or no bombs / Unexposed Mine
 -4 = Flag
 -5 = 
 -6 = 
@@ -24,11 +24,11 @@ TO DO:
     - if multiple tiles beside it have no bombs around it, reveal them all
     - optional -> don't know if it's worth it...
 - ERROR CHECKING -> p2
-    - impossible tile
+    - impossible tile -> DONE
     - revealed tile / already flagged -> DONE
 - MAIN GAME CYCLE -> p1
     - pick tile
     - reveal tile
         - bomb or continue
 - END GAME CHECK -> p1
-    - see if all bombs have been picked after each tile reveal
+    - see if all bombs have been picked after each tile reveal OR if a bomb is revealed

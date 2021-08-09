@@ -61,6 +61,7 @@ class Minesweeper {
         int difficultyChoice(string ss);
         void beginningSettings();
         void chooseTile(int & idx, char & mode);
+        void changeTile(int idx, char mode);
         void mainGame();
         
 
