@@ -51,21 +51,39 @@ int Minesweeper::chooseTile() {
     int x = -1;
     int y = -1;
     char mode = 'z';
+    bool flag = false;
 
     do {
-        while (mode != 'R' || mode != 'F') {
-            mode = 'z';
-            cout << "Reveal(R) or Flag(F) a tile, in an \"x y <R/F>\" format. For example: \"5 2 R\": " << endl;
-            cin >> x >> y >> mode;
+        x = -1;
+        y = -1;
+        mode = 'z';
+        flag = false;
 
-            if (mode == 'R') {
-                cout << endl << "Revealing the tile at " << x << " " << y << "." << endl;
-            } else if (mode == 'F') {
-                cout << endl << "Flagging the tile at " << x << " " << y << "." << endl;
+        cout << "Reveal(R) or Flag(F) a tile, in a \"x y <R/F>\" format. For example: \"5 2 R\": " << endl;
+        cin >> x >> y >> mode;
+        cout << endl << "Choosing the tile at " << x << " " << y << "." << endl;
+
+        // if the tile is invalid
+        if (mainBoard->invalidTile(x, y) == true) {
+            flag = false;
+
+        // if we are to reveal a tile
+        } else if (mode == 'R' || mode == 'r') {
+            // check if the tile is already revealed
+            if (mainBoard->exposedError(mainBoard->index(x,y)) == true) {
+                flag = false;
+            } else {
+                
             }
             
+        } else if (mode == 'F' || mode == 'f') {
+
+        } else {
+            cout << endl << "Incorrect mode! Please choose 'R' or 'F'!" << endl;
         }
-    } while (mainBoard->revealedTileError(mainBoard->visualBoard[mainBoard->index(x, y)]));
+
+
+    } while (flag == false);
 
     return mainBoard->index(x, y);
 }

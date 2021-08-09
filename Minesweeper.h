@@ -36,6 +36,9 @@ class Board {
         bool revealedTileError(int tile);
         bool revealTile(int tile);
 
+        bool invalidTile(int x, int y);
+        bool exposedError(int tile);
+        bool flagError(int tile);
 
         int boardCols;
         int boardRows;

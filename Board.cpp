@@ -62,12 +62,6 @@ void Board::mainVisualBoard() {
     cout << endl;
     for (int j = 0; j < boardRows; j++) {
         for (int k = 0; k < boardCols + 1; k++) {
-            // if (k == 0 && j < 10) {
-            //     cout << "  " << j+1;
-            // } else if (k == 0 && j >= 10) {
-            //     cout << "  " << j+1;
-
-            // testing
             if (k == 0) {
                 cout << "  " << j+1;
             } else {
@@ -90,12 +84,6 @@ void Board::exposedVisualBoard() {
     cout << endl;
     for (int j = 0; j < boardRows; j++) {
         for (int k = 0; k < boardCols + 1; k++) {
-            // if (k == 0 && j < 10) {
-            //     cout << "  " << j+1;
-            // } else if (k == 0 && j >= 10) {
-            //     cout << "  " << j+1;
-
-            // testing
             if (k == 0) {
                 cout << "  " << j+1;
             } else {
@@ -261,25 +249,34 @@ void Board::initiateBoard() {
 }
 
 
-// in the case that the tile has already been selected, or flagged
-bool Board::revealedTileError(int tile) {
-    if (visualBoard[tile] == -4) {
-        cout << endl << "This tile has already been flagged!" << endl;
-        return false;
-    } else if (visualBoard[tile] != -1) {
-        cout << endl << "This tile has already been revealed!" << endl;
-        return false;
-    } else {
+bool Board::invalidTile(int x, int y) {
+    if (x <= 0 || x > boardCols) {
+        cout << endl << "Invalid x value!" << endl;
         return true;
+    } else if (y <= 0 || y > boardRows) {
+        cout << endl << "Invalid y value!" << endl;
+        return true;
+    } else {
+        return false;
     }
 }
 
 
-bool Board::revealTile(int tile) {
-    if (valueBoard[tile] == -2) {
-        return false;
-        // we'll print the exposed board
+bool Board::exposedError(int tile) {
+    if (visualBoard[tile] == -3) {
+        cout << endl << "The tile is already exposed!" << endl;
+        return true;
     } else {
-        visualBoard[tile] == valueBoard[tile];
+        return false;
+    }
+}
+
+
+bool Board::flagError(int tile) {
+    if (visualBoard[tile] == -4) {
+        cout << endl << "The tile is flagged!" << endl;
+        return true;
+    } else {
+        return false;
     }
 }
