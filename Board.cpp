@@ -266,6 +266,9 @@ bool Board::exposedError(int tile) {
     if (visualBoard[tile] == -3) {
         cout << endl << "The tile is already exposed!" << endl;
         return true;
+    } else if (visualBoard[tile] == -4) {
+        cout << endl << "The tile is flagged! Unflag it before exposing!" << endl;
+        return true;
     } else {
         return false;
     }
@@ -273,8 +276,8 @@ bool Board::exposedError(int tile) {
 
 
 bool Board::flagError(int tile) {
-    if (visualBoard[tile] == -4) {
-        cout << endl << "The tile is flagged!" << endl;
+    if (visualBoard[tile] != -1 || visualBoard[tile] != -4) {
+        cout << endl << "You can't flag/unflag this tile!" << endl;
         return true;
     } else {
         return false;

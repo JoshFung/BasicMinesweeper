@@ -47,51 +47,69 @@ void Minesweeper::beginningSettings() {
 }
 
 
-int Minesweeper::chooseTile() {
+void Minesweeper::chooseTile(int & idx, char & mode) {
     int x = -1;
     int y = -1;
-    char mode = 'z';
+    char md = 'z';
     bool flag = false;
 
     do {
-        x = -1;
-        y = -1;
-        mode = 'z';
+        x = y = -1;
+        md = 'z';
         flag = false;
 
         cout << "Reveal(R) or Flag(F) a tile, in a \"x y <R/F>\" format. For example: \"5 2 R\": " << endl;
-        cin >> x >> y >> mode;
-        cout << endl << "Choosing the tile at " << x << " " << y << "." << endl;
+        cin >> x >> y >> md;
 
         // if the tile is invalid
         if (mainBoard->invalidTile(x, y) == true) {
-            flag = false;
+            // flag remains false
 
         // if we are to reveal a tile
-        } else if (mode == 'R' || mode == 'r') {
+        } else if (md == 'R' || md == 'r') {
             // check if the tile is already revealed
             if (mainBoard->exposedError(mainBoard->index(x,y)) == true) {
                 flag = false;
             } else {
-                
+                cout << endl << "Revealing the tile at " << x << " " << y << "." << endl;
+                idx = mainBoard->index(x,y);
+                mode = 'R';
+                flag = true;
             }
             
-        } else if (mode == 'F' || mode == 'f') {
+        } else if (md == 'F' || md == 'f') {
+            if (mainBoard->flagError(mainBoard->index(x,y)) == true) {
+                flag = false;
+            } else if (mainBoard->visualBoard[mainBoard->index(x,y)] == -4) {
+                cout << endl << "Unflagging the tile at " << x << " " << y << "." << endl;
+                idx = mainBoard->index(x,y);
+                mode = 'F';
+                flag = true;
+            } else {
+                cout << endl << "Flagging the tile at " << x << " " << y << "." << endl;
+                idx = mainBoard->index(x,y);
+                mode = 'F';
+                flag = true;
+            }
 
         } else {
             cout << endl << "Incorrect mode! Please choose 'R' or 'F'!" << endl;
+            // flag remains false
         }
-
 
     } while (flag == false);
 
-    return mainBoard->index(x, y);
 }
 
 
 void Minesweeper::mainGame() {
+    int idx = -1;
+    char mode = 'z';
+
     while (gameState == true) {
-        
+        idx = -1;
+        mode = 'z';
+
     }
 }
 
