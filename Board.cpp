@@ -272,7 +272,6 @@ bool Board::exposedError(int tile) {
 
 
 bool Board::flagError(int tile) {
-    cout << "VISUAL BOARD TILE VALUE: " << visualBoard[tile] << endl;
     if (visualBoard[tile] != -3 && visualBoard[tile] != -4) {
         cout << endl << "You can't flag/unflag this tile!" << endl;
         return true;
