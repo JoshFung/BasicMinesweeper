@@ -217,11 +217,6 @@ void Board::initiateMines() {
     for (int i = 0; i < mineCount; i++) {
         valueBoard[rand() % totalTiles] = -2;
     }
-    // for (int j = 0; j < totalTiles; j++) {
-    //     if (valueBoard[j] == -2) {
-    //         visualBoard[j] = -3;
-    //     }
-    // }
 }
 
 
@@ -244,7 +239,6 @@ void Board::initiateBoard() {
         for (int k = 0; k < boardRows; k++) {
             if (valueBoard[index(j, k)] != -2) {
                 valueBoard[index(j, k)] = nearbyMines(j, k);
-                visualBoard[index(j, k)] = -3;
             }
         }
     }
@@ -253,10 +247,10 @@ void Board::initiateBoard() {
 
 
 bool Board::invalidTile(int x, int y) {
-    if (x <= 0 || x > boardCols) {
+    if (x < 0 || x > boardCols) {
         cout << endl << "Invalid x value!" << endl;
         return true;
-    } else if (y <= 0 || y > boardRows) {
+    } else if (y < 0 || y > boardRows) {
         cout << endl << "Invalid y value!" << endl;
         return true;
     } else {
@@ -266,7 +260,7 @@ bool Board::invalidTile(int x, int y) {
 
 
 bool Board::exposedError(int tile) {
-    if (visualBoard[tile] == -1) {
+    if (visualBoard[tile] >= -1) {
         cout << endl << "The tile is already exposed!" << endl;
         return true;
     } else if (visualBoard[tile] == -4) {
@@ -279,7 +273,8 @@ bool Board::exposedError(int tile) {
 
 
 bool Board::flagError(int tile) {
-    if (visualBoard[tile] != -3 || visualBoard[tile] != -4) {
+    cout << "VISUAL BOARD TILE VALUE: " << visualBoard[tile] << endl;
+    if (visualBoard[tile] != -3 && visualBoard[tile] != -4) {
         cout << endl << "You can't flag/unflag this tile!" << endl;
         return true;
     } else {

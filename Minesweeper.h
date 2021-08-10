@@ -63,7 +63,9 @@ class Minesweeper {
         void chooseTile(int & idx, char & mode);
         void changeTile(int idx, char mode);
         int endGameCheck(int idx);
-        void mainGame();
+        bool mainGame();
+
+        void mineSweeperSolver(char & mode);
         
 
     private:
@@ -72,6 +74,7 @@ class Minesweeper {
         int cols;
         int mines;
         bool gameState;
+        bool proceed;
 };
 
 

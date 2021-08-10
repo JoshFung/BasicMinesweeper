@@ -1,10 +1,14 @@
 #include "Minesweeper.h"
 
+
 Minesweeper::Minesweeper() {
-    beginningSettings();
-    mainBoard = new Board(rows, cols, mines);
-    // mainBoard->printBoard();
-    mainGame();
+    proceed = true;
+
+    while (proceed == true) {
+        beginningSettings();
+        mainBoard = new Board(rows, cols, mines);
+        proceed = mainGame();           
+    }
 }
 
 
@@ -27,6 +31,7 @@ int Minesweeper::difficultyChoice(string ss) {
         mines = 99;
         return 0;
     } else {
+        cout << "Error! Invalid difficulty!" << endl;
         return 1;
     }
 }
@@ -34,11 +39,11 @@ int Minesweeper::difficultyChoice(string ss) {
 
 void Minesweeper::beginningSettings() {
     string response;
-    cout << "What difficulty would you like to play? Easy, Medium, or Hard: ";
-    cin >> response;
 
     int flag = 1;
     while (flag == 1) {
+        cout << "What difficulty would you like to play? Easy, Medium, or Hard: ";
+        cin >> response;
         flag = difficultyChoice(response);
     }
     cout << "You will play on a " << rows << "x" << cols << " board, with " << mines << " mines." << endl;
@@ -59,36 +64,39 @@ void Minesweeper::chooseTile(int & idx, char & mode) {
         md = 'z';
         flag = false;
 
+        mainBoard->printBoard();
+
+        cout << "----------------------------------------------" << endl;
         cout << "Reveal(R) or Flag(F) a tile, in a \"x y <R/F>\" format. For example: \"5 2 R\": " << endl;
         cin >> x >> y >> md;
 
         // if the tile is invalid
-        if (mainBoard->invalidTile(x, y) == true) {
+        if (mainBoard->invalidTile(x-1, y-1) == true) {
             // flag remains false
 
         // if we are to reveal a tile
         } else if (md == 'R' || md == 'r') {
             // check if the tile is already revealed
-            if (mainBoard->exposedError(mainBoard->index(x,y)) == true) {
+            if (mainBoard->exposedError(mainBoard->index(x-1,y-1)) == true) {
                 flag = false;
             } else {
                 cout << endl << "Revealing the tile at " << x << " " << y << "." << endl;
-                idx = mainBoard->index(x,y);
+                idx = mainBoard->index(x-1,y-1);
                 mode = 'R';
                 flag = true;
             }
             
         } else if (md == 'F' || md == 'f') {
-            if (mainBoard->flagError(mainBoard->index(x,y)) == true) {
+            if (mainBoard->flagError(mainBoard->index(x-1,y-1)) == true) {
                 flag = false;
             } else if (mainBoard->visualBoard[mainBoard->index(x,y)] == -4) {
                 cout << endl << "Unflagging the tile at " << x << " " << y << "." << endl;
-                idx = mainBoard->index(x,y);
+                idx = mainBoard->index(x-1,y-1);
                 mode = 'F';
                 flag = true;
             } else {
                 cout << endl << "Flagging the tile at " << x << " " << y << "." << endl;
-                idx = mainBoard->index(x,y);
+                idx = mainBoard->index(x-1,y-1);
                 mode = 'F';
                 flag = true;
             }
@@ -127,7 +135,7 @@ int Minesweeper::endGameCheck(int idx) {
         return -1;
     } else {
         for (int i = 0; i < (rows * cols); i++) {
-            if (mainBoard->valueBoard[idx] != -2 && mainBoard->visualBoard[idx] == -3) {
+            if (mainBoard->valueBoard[i] != -2 && mainBoard->visualBoard[i] == -3) {
                 // game continues -> still unexposed blanks
                 return 0;
             }
@@ -139,33 +147,66 @@ int Minesweeper::endGameCheck(int idx) {
 }
 
 
-void Minesweeper::mainGame() {
+bool Minesweeper::mainGame() {
     int idx = -99;
     char mode = 'z';
     int endCheck = -99;
+    char response = 'z';
+
+    mainBoard->printBoard();
 
     while (gameState == true) {
         idx = -1;
         mode = 'z';
 
-        mainBoard->printBoard();
+        // IF YOU WANT TO TURN ON THE SOLVER, UNCOMMENT LINE 162 AND COMMENT 165 + 166
+        // mineSweeperSolver(mode);
+
         chooseTile(idx, mode);
-        changeTile(idx, mode);        
+        changeTile(idx, mode);
 
         if (mode == 'R') {
             endCheck = endGameCheck(idx);
 
             if (endCheck == -1) {
-                cout << endl << "Game over! You detonated a mine!" << endl;
+                cout << endl << "----------------------------------------------" << endl;
+                cout << "Game over! You detonated a mine!" << endl;
                 mainBoard->printBoardExposed();
                 gameState = false;
             } else if (endCheck == 1) {
-                cout << endl << "Congratulations! You have avoided all the mines!" << endl;
+                cout << "----------------------------------------------" << endl;
+                cout << "Congratulations! You have avoided all the mines!" << endl;
                 mainBoard->printBoardExposed();
                 gameState = false;
             }
         }
 
     }
+
+
+    while (response != 'Y' && response != 'y' && response != 'N' && response != 'n') {
+        cout << "Would you like to play again? Y/N" << endl;
+        cin >> response;
+    }
+
+    if (response == 'Y' || response == 'y') {
+        return true;
+    } else {
+        cout << "Thanks for playing! Have a good one! :^)" << endl;
+        return false;
+    }
+
 }
 
+
+void Minesweeper::mineSweeperSolver(char & mode) {
+    mode = 'R';
+
+    for (int i = 0; i < (rows * cols); i++) {
+        if (mainBoard->valueBoard[i] != -2) {
+            changeTile(i, 'R');
+        } else if (mainBoard->valueBoard[i] == -2) {
+            changeTile(i, 'F');
+        }
+    }
+}
