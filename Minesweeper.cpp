@@ -3,7 +3,8 @@
 Minesweeper::Minesweeper() {
     beginningSettings();
     mainBoard = new Board(rows, cols, mines);
-    mainBoard->printBoard();
+    // mainBoard->printBoard();
+    mainGame();
 }
 
 
@@ -139,15 +140,31 @@ int Minesweeper::endGameCheck(int idx) {
 
 
 void Minesweeper::mainGame() {
-    int idx = -1;
+    int idx = -99;
     char mode = 'z';
+    int endCheck = -99;
 
     while (gameState == true) {
         idx = -1;
         mode = 'z';
 
+        mainBoard->printBoard();
         chooseTile(idx, mode);
-        changeTile(idx, mode);
+        changeTile(idx, mode);        
+
+        if (mode == 'R') {
+            endCheck = endGameCheck(idx);
+
+            if (endCheck == -1) {
+                cout << endl << "Game over! You detonated a mine!" << endl;
+                mainBoard->printBoardExposed();
+                gameState = false;
+            } else if (endCheck == 1) {
+                cout << endl << "Congratulations! You have avoided all the mines!" << endl;
+                mainBoard->printBoardExposed();
+                gameState = false;
+            }
+        }
 
     }
 }

@@ -106,8 +106,11 @@ void Board::printBoard() {
     cout << endl;
     topRowVisualBoard();
     mainVisualBoard();
+}
 
-    // temporary
+
+void Board::printBoardExposed() {
+    cout << endl;
     topRowVisualBoard();
     exposedVisualBoard();
 }
