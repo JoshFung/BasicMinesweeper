@@ -207,7 +207,6 @@ int Board::nearbyMines(int x, int y) {
     count += checkUpperRow(x, y);
     count += checkLowerRow(x, y);
 
-    // cout << "bomb count " << count << endl;
     return count;
 }
 
